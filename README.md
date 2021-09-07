@@ -9,3 +9,5 @@ A Discord Helper Bot for a Genshin Impact Server
 !resin [CURRENT RESIN]: Paimon calculates when the resin will be full.
 
 !botngu: Mock the emergency food.
+
+!event: Information on current events
