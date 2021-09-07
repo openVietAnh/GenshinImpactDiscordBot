@@ -11,3 +11,5 @@ A Discord Helper Bot for a Genshin Impact Server
 !botngu: Mock the emergency food.
 
 !event: Information on current events
+
+!ehe: What do you mean EHE?!?
