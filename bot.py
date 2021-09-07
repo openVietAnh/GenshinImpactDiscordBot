@@ -43,12 +43,20 @@ async def calculate_resin(ctx, current_resin: int):
         response = "Xả nhựa thôi nào nhà lữ hành! Để đầy lâu sẽ gây lãng phí đó!"
         await ctx.send(response)
 
+@bot.command(name='ehe', help='What do you mean EHE?!?')
+async def ehe(ctx):
+    ehe_gif = "https://c.tenor.com/cZHoFqQEgwkAAAAM/paimon.gif"
+    response = "EHE TE NANDAYO?!?"
+    await ctx.send(response)
+    await ctx.send(ehe_gif)
+
 @bot.command(name='botngu', help='Mock the emergency food.')
 async def bully(ctx):
     id = '<@' + str(ctx.message.author.id) + '>'
-    print(id)
+    gif = "https://c.tenor.com/vteeAE47mHgAAAAd/mihoyo-genshin.gif"
     response = "Thôi đi!" + id +" ngu thì có!"
     await ctx.send(response)
+    await ctx.send(gif)
 
 @bot.event
 async def on_ready():
