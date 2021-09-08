@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
 from event import Event
+from artifact import Artifact
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -57,6 +58,14 @@ async def bully(ctx):
     response = "Thôi đi!" + id +" ngu thì có!"
     await ctx.send(response)
     await ctx.send(gif)
+
+@bot.command(name='artifact', help="Generate a random 5 stars artifact")
+async def get_artifact(ctx, type, level):
+    if type.lower() not in ["flower", "plume", "sands", "goblet", "circlet"] or int(level) not in range(0, 21):
+        await ctx.send("Nhà lữ hành, bạn bị ngáo à? Làm gì có thánh di vật nào như thế này?!")
+        return
+    artifact = Artifact(type, level)
+    await ctx.send("\n".join(artifact.get_info()))
 
 @bot.event
 async def on_ready():
