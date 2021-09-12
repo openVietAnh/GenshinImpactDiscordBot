@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 
 from event import Event
 from artifact import Artifact
+from domain import Domain
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -66,6 +67,17 @@ async def get_artifact(ctx, type, level):
         return
     artifact = Artifact(type, level)
     await ctx.send("\n".join(artifact.get_info()))
+
+@bot.command(name='today', help='Check what domain resource you can farm today')
+async def get_resource(ctx, type="all"):
+    if type not in ["talent", "weapon", "all", "book"]:
+        message = "Nhà lữ hành, làm gì có loại tài nguyên nào gọi là " + type + ", chỉ có talent/book, weapon, all thôi!"
+        await ctx.send(message)
+    else:
+        domain = Domain()
+        messages = domain.get_output(type)
+        await ctx.send('\n'.join(messages))
+
 
 @bot.event
 async def on_ready():
