@@ -33,7 +33,7 @@ class Domain(object):
                 "Narukami": ("Thundering Pulse", "Hamayumi", "Katsuragikiri Nagamasa")
             },
             2: {
-                "Dandelion Glaidator": (""),
+                "Dandelion Glaidator": ("Wolf's Gravestone", "Lost Prayer to the Sacred Winds", "Skyward Spine", "Amos", "Sacrificial Sword", "Favonious Lance", "Festering Desire", "Frostbearer", "Alley Hunter", "Favonious Warbow", "Royal Bow", "Sacrificial Fragments", "Favonius Greatsword", "Royal Greatsword"),
                 "Aerosiderite": ("Memory of Dush", "Vortex Vanquisher", "Iron Sting", "Serpent Spine", "Lithic Spear", "Prototype Starglitter", "Compound Bow", "Mappa Mare", "Prototype Archaic"),
                 "Mask": ("Kitain Cross Spear", "Engulfing Lighting", "The Catch")
             }
