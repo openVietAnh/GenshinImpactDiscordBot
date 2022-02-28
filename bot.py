@@ -39,7 +39,7 @@ async def introduce(ctx):
 async def calculate_resin(ctx, current_resin: int):
     if current_resin < 160:
         full_resin = (160 - current_resin) * 8
-        full_time = datetime.now() + timedelta(minutes=full_resin)
+        full_time = datetime.now(TIMEZONE_VN) + timedelta(minutes=full_resin)
         hour = full_time.hour
         minute = full_time.minute
         response = "Nhà lữ hành, trong vòng " + str(full_resin) + " phút nữa nhựa sẽ đầy nha. Vào " + str(hour) + "h" + str(minute) + "p đừng quên xả nhựa đó!"
