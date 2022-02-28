@@ -3,6 +3,7 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+from pytz import timezone
 
 from datetime import datetime, timedelta
 
@@ -13,6 +14,8 @@ from domain import Domain
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+
+TIMEZONE_VN = timezone('Asia/Ho_Chi_Minh')
 
 bot = commands.Bot(command_prefix='!')
 
