@@ -7,34 +7,39 @@ from pytz import timezone
 
 from datetime import datetime, timedelta
 
-from event import Event
 from artifact import Artifact
 from domain import Domain
+
+from bs4 import BeautifulSoup
+import requests
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
 USERS_TIMEZONE = {
-    481458382662795264: 'Asia/Ho_Chi_Minh'
+    481458382662795264: 'Asia/Ho_Chi_Minh',
+    648151267759226880: 'Asia/Kolkata'
 }
 
 bot = commands.Bot(command_prefix='!')
 
 @bot.command(name='event', help='Information on current events')
 async def get_events(ctx):
-    # event = Event()
-    # event_names, event_links, event_times = event.get_events()
-    # messages = ["List of on-going events:"]
-    # for i in range(len(event_names)):
-    #     messages.append(event_names[i] + " còn " + event_times[i])
-    #     messages.append("https://genshin-impact.fandom.com" + event_links[i])
-    response = "The event command is under maintaince, sorry for the inconvenience, Traveler"
+    url = "https://genshin-impact.fandom.com/wiki/Events"
+    html_content = requests.get(url).text
+    soup = BeautifulSoup(html_content, "lxml")
+    tables = soup.find_all('table')
+    cells = tables[1].findChildren('td')
+    times, event = cells[1::3], cells[0::3]
+    result = ["Dear Travelver, here is the list of on-going events:"]
+    for i in range(len(times)):
+        result.append(event[i].text + " ends on " + " ".join(times[i].text.split(" ")[-3:-1]))
+    response = "\n".join(result)
     await ctx.send(response)
 
 @bot.command(name='introduce', help='Paimon introduces herself')
 async def introduce(ctx):
-    print(ctx.message.author)
     response = "I am The Traveler's Emergency Food and his best companion!"
     await ctx.send(response)
 
