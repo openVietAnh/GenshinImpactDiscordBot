@@ -4,9 +4,9 @@ class Domain(object):
     def __init__(self):
         self.talent = {
             0: {
-                "Freedom": ("Aloy", "Amber", "Barbara", "Diona", "Klee", "Sucrose", "Childe", "Main Phong"),
-                "Prosperity": ("Keqing", "Ningguang", "Qiqi", "Main Nham", "Xiao"),
-                "Transience": ("Main Lôi", "Yoimiya")
+                "Freedom": ("Aloy", "Amber", "Barbara", "Diona", "Klee", "Sucrose", "Childe", "Anemo Traveler"),
+                "Prosperity": ("Keqing", "Ningguang", "Qiqi", "Geo Traveler", "Xiao"),
+                "Transience": ("Electro Traveler", "Yoimiya")
             },
             1: {
                 "Resistance": ("Bennett", "Dilluc", "Eula", "Jean", "Mona", "Noelle", "Razor"),
@@ -41,17 +41,17 @@ class Domain(object):
         self.weapon[3], self.weapon[4], self.weapon[5] = self.weapon[0], self.weapon[1], self.weapon[2]
 
     def get_output(self, type):
-        weekDays = ["Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ Nhật"]
+        weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         day = datetime.now().weekday()
         if day == 6:
-            return ["Nhà lữ hành, hôm nay là cuối tuần rồi! Vào Chủ Nhật bạn có thể farm mọi loại tài nguyên!"]
+            return ["Traveler, it is the weekend! In Sunday you can farm anything!"]
         else:
-            messages = ["Hôm nay là " + weekDays[day] + " rồi nhà lữ hành, bạn có thể kiếm các loại tài nguyên sau:"]
+            messages = ["Today is " + weekDays[day] + " Traveler, you can farm these resource:"]
             if type in ["talent", "book", "all"]:
                 for key, value in self.talent[day].items():
-                    messages.append("Sách **" + key + "**: " + ", ".join(value))
+                    messages.append("**" + key + "** book: " + ", ".join(value))
             if type in ["weapon", "all"]:
                 for key, value in self.weapon[day].items():
-                    messages.append("Nguyên liệu **" + key + "**: " + ", ".join(value))
+                    messages.append("**" + key + "** material: " + ", ".join(value))
             return messages
 
