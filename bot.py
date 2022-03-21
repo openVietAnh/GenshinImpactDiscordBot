@@ -19,10 +19,12 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 USERS_TIMEZONE = {
     481458382662795264: 'Asia/Ho_Chi_Minh',
-    648151267759226880: 'Asia/Kolkata'
+    648151267759226880: 'Asia/Kolkata',
+    827247313805639721: 'America/Toronto'
 }
 
-bot = commands.Bot(command_prefix='!')
+activity = discord.Game(name="Genshin Impact")
+bot = commands.Bot(command_prefix='!', activity=activity, status=discord.Status.online)
 
 @bot.command(name='event', help='Information on current events')
 async def get_events(ctx):
@@ -91,7 +93,6 @@ async def get_resource(ctx, type="all"):
         domain = Domain()
         messages = domain.get_output(type)
         await ctx.send('\n'.join(messages))
-
 
 @bot.event
 async def on_ready():
