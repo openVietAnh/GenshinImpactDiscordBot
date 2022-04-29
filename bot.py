@@ -3,7 +3,7 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from pytz import timezone
+from pytz import timezone, all_timezones
 
 from datetime import datetime, timedelta
 
@@ -18,9 +18,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
 USERS_TIMEZONE = {
-    481458382662795264: 'Asia/Ho_Chi_Minh',
-    648151267759226880: 'Asia/Kolkata',
-    827247313805639721: 'America/Toronto'
+    # 481458382662795264: 'Asia/Ho_Chi_Minh',
 }
 
 activity = discord.Game(name="Genshin Impact")
@@ -45,13 +43,38 @@ async def introduce(ctx):
     response = "I am The Traveler's Emergency Food and his best companion!"
     await ctx.send(response)
 
+@bot.command(name='settime', help='Set your timezone to calculate resin full time')
+async def calculate_resin(ctx, current_hour: int):
+    if current_hour < 0 or current_hour > 23:
+        response = "Traveler, your current hour must between 0AM and 23PM!"
+        await ctx.send(response)
+    else:
+        result = []
+        for zone in all_timezones:
+            if datetime.now(timezone(zone)).hour == current_hour:
+                result.append(zone)
+        USERS_TIMEZONE[ctx.message.author.id] = result[0]
+        response = "Traveler, your timezone has been set among these:\n"
+        response += ", ".join(result) + "\n"
+        response += "Please run the `!resin` command to check"
+        await ctx.send(response)
+
+async def introduce(ctx):
+    response = "I am The Traveler's Emergency Food and his best companion!"
+    await ctx.send(response)
+
 @bot.command(name='resin', help="!resin [CURRENT RESIN]: Paimon calculates when the resin will be full.")
 async def calculate_resin(ctx, current_resin: int):
     if current_resin < 160:
-        full_resin = (160 - current_resin) * 8
-        full_time = datetime.now(timezone(USERS_TIMEZONE[ctx.message.author.id])) + timedelta(minutes=full_resin)
-        display_time = "{:02d}".format(full_time.hour) + ":" + "{:02d}".format(full_time.minute)
-        response = "Traveler, in " + str(full_resin) + " minutes your resin will be full. At " + display_time + " don't forget to spend them!"
+        try:
+            full_resin = (160 - current_resin) * 8
+            full_time = datetime.now(timezone(USERS_TIMEZONE[ctx.message.author.id])) + timedelta(minutes=full_resin)
+            display_time = "{:02d}".format(full_time.hour) + ":" + "{:02d}".format(full_time.minute)
+            response = "Traveler, in " + str(full_resin) + " minutes your resin will be full. At " + display_time + " don't forget to spend them!"
+        except KeyError:
+            response = "Traveler, your timezone is not set, I don't know which time resin will be full in your local timezone.\n"
+            response += "In " + str(full_resin) + " minutes your resin will be full.\n"
+            response += "Use the *!settime* command to set your timezone. Usage: `!settime [current hour in 24 hours format]`. Example: `!settime 13`"
         await ctx.send(response)
     else:
         response = "Let's spend your resin Traveler! It would be wasteful if you let them full for a long time!"
