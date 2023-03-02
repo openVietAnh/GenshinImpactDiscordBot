@@ -22,7 +22,7 @@ USERS_TIMEZONE = {
 }
 
 activity = discord.Game(name="Genshin Impact")
-bot = commands.Bot(command_prefix='!', activity=activity, status=discord.Status.online)
+bot = commands.Bot(command_prefix='!', activity=activity, status=discord.Status.online,  intents=discord.Intents.all())
 
 @bot.command(name='event', help='Information on current events')
 async def get_events(ctx):
